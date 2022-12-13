@@ -3,8 +3,6 @@ package br.com.beganinha.campominado.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.beganinha.campominado.exception.ExplosionException;
-
 public class Spot {
 	
 	private boolean mined = false;
@@ -61,7 +59,7 @@ public class Spot {
 			
 			//Lança exception caso esteja minado
 			if (mined) {
-				throw new ExplosionException();
+				//TODO Implementar nova versão
 			}
 			
 			/*
@@ -133,19 +131,19 @@ public class Spot {
 		marked = false;
 	}
 	
-	public String toString() {
-		if (marked) { 
-			return "x";
-		} else if (opened && mined) {
-			return "*";
-		} else if (opened && minesInTheNeighborhood() > 0) { 
-			return Long.toString(minesInTheNeighborhood());
-		} else if (opened) {
-			return " ";
-		} else {
-			return "?";
-		}
-	}
+//	public String toString() {
+//		if (marked) { 
+//			return "x";
+//		} else if (opened && mined) {
+//			return "*";
+//		} else if (opened && minesInTheNeighborhood() > 0) { 
+//			return Long.toString(minesInTheNeighborhood());
+//		} else if (opened) {
+//			return " ";
+//		} else {
+//			return "?";
+//		}
+//	}
 		
 	
 }
