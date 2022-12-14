@@ -7,9 +7,9 @@ import java.util.function.Predicate;
 
 public class Board implements SpotObserver {
 
-	private int quantityMines;
-	private int lines;
-	private int columns;
+	private final int quantityMines;
+	private final int lines;
+	private final int columns;
 
 	private final List<Spot> spots = new ArrayList<>();
 	private final List<Consumer<ResultEvent>> observers = new ArrayList<>();
@@ -44,6 +44,7 @@ public class Board implements SpotObserver {
 	private void showMines() {
 		spots.stream()
 			.filter(spot -> spot.isMined())
+//			.filter(spot -> !spot.isMined())
 			.forEach(s -> s.setOpened(true));
 	}
 
@@ -112,6 +113,22 @@ public class Board implements SpotObserver {
 		}
 	}
 
+	public int getQuantityMines() {
+		return quantityMines;
+	}
+
+	public int getLines() {
+		return lines;
+	}
+
+	public int getColumns() {
+		return columns;
+	}
+	
+	public void forEachSpot(Consumer<Spot> func) {
+		spots.forEach(func);
+	}
+	
 //	public String toString() {
 //		//Use StringBuilder sempre que houver uma necessidade grande de concactenação
 //		StringBuilder sb = new StringBuilder();

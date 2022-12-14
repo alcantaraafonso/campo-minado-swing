@@ -49,7 +49,7 @@ public class Spot {
 		}
 	}
 	
-	void switchSpotMark() {
+	public void switchSpotMark() {
 		if (!opened) {
 			marked = !marked;
 			notifyObservers(marked ? SpotEvent.MARK : SpotEvent.UNMARK);
@@ -62,7 +62,7 @@ public class Spot {
 		}
 	}
 	
-	boolean openSpot() {
+	public boolean openSpot() {
 		//só abre se não estiver aberto e não estiver marcado
 		if (!opened && !marked) {
 			//marca como true
@@ -92,7 +92,7 @@ public class Spot {
 		return false;
 	}
 	
-	boolean safeNeighborhood() {
+	public boolean safeNeighborhood() {
 		return neighbors.stream()
 				.noneMatch(n -> n.mined);
 	}
@@ -135,8 +135,8 @@ public class Spot {
 		return unraveled || protectedSpot;
 	}
 	
-	long minesInTheNeighborhood() {
-		return neighbors.stream()
+	public int minesInTheNeighborhood() {
+		return (int)neighbors.stream()
 				.filter(n -> n.mined)
 				.count();
 	}
@@ -145,6 +145,7 @@ public class Spot {
 		opened = false;
 		mined = false;
 		marked = false;
+		notifyObservers(SpotEvent.RESTART);
 	}
 	
 //	public String toString() {

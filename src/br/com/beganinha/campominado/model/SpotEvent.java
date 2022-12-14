@@ -1,5 +1,5 @@
 package br.com.beganinha.campominado.model;
 
 public enum SpotEvent {
-	OPEN, MARK, UNMARK, EXPLODE;
+	OPEN, MARK, UNMARK, EXPLODE, RESTART;
 }
