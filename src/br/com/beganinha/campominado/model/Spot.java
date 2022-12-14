@@ -9,6 +9,7 @@ public class Spot {
 	private boolean opened = false;
 	private boolean marked = false;
 	private List<Spot> neighbors = new ArrayList<>();
+	private List<SpotObserver> observers = new ArrayList<>();
 	
 	private final int line;
 	private final int column;
@@ -18,6 +19,15 @@ public class Spot {
 		this.column = column;
 	}
 
+	
+	public void registerObservers(SpotObserver observer) {
+		observers.add(observer);
+	}
+	
+	private void notifyObservers(SpotEvent event) {
+		observers.stream()
+			.forEach(o -> o.eventHasOcurred(this, event));
+	}
 	
 	boolean addNeighbor(Spot neighbor) {
 		boolean isDifferentLine = line != neighbor.line;
@@ -42,6 +52,7 @@ public class Spot {
 	void switchSpotMark() {
 		if (!opened) {
 			marked = !marked;
+			notifyObservers(marked ? SpotEvent.MARK : SpotEvent.UNMARK);
 		}
 	}
 	
@@ -55,12 +66,14 @@ public class Spot {
 		//só abre se não estiver aberto e não estiver marcado
 		if (!opened && !marked) {
 			//marca como true
-			opened = true;
 			
 			//Lança exception caso esteja minado
 			if (mined) {
-				//TODO Implementar nova versão
+				notifyObservers(SpotEvent.EXPLODE);
+				return true;
 			}
+			
+			setOpened(true);
 			
 			/*
 			 * Aqui é feito um processo de recussividade, onde
@@ -94,6 +107,9 @@ public class Spot {
 	
 	void setOpened(boolean opened) {
 		this.opened = opened;
+		
+		if(opened)
+			notifyObservers(SpotEvent.OPEN);
 	}
 	
 	public boolean isClosed() {
